@@ -22,3 +22,13 @@ async def create_task(session: AsyncSession, task: TaskCreate) -> Task:
     await session.commit()
     await session.refresh(new_task)
     return new_task
+
+
+async def delete_task(session: AsyncSession, task_id: int) -> bool:
+    task = await get_one_task(session=session, task_id=task_id)
+    if task:
+        await session.delete(task)
+        await session.commit()
+        return True
+    else:
+        return False
