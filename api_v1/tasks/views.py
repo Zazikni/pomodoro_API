@@ -8,6 +8,7 @@ from api_v1.tasks.schemas import (
     TaskDelete,
     TaskUpdatePartial,
 )
+from .dependencies import get_task_by_id
 from . import crud
 from core.database_manager import database_manager
 
@@ -43,14 +44,9 @@ async def create_task(
 @router.put(path="/edit", response_model=Task)
 async def edit_task_partial(
     task_info: TaskUpdatePartial,
+    task: Task = Depends(get_task_by_id),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
-    task = await crud.get_one_task(session=session, task_id=task_info.id)
-    if not task:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Task with id: {task_info.id} not found",
-        )
     new_task = await crud.edit_task_partial(
         session=session, new_task_data=task_info, task=task
     )
