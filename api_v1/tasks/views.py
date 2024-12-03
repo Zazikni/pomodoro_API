@@ -1,9 +1,12 @@
 from typing import List
 
 from fastapi import APIRouter, status, HTTPException
-from api_v1.tasks.schemas import Task, tasks_fix
+from api_v1.tasks.schemas import Task, TaskCreate, TaskUpdateTitle, TaskDelete
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
+
+default_task = Task(title="default_task_title", pomodoro_count=0, category_id=1, id=1)
+default_tasks_list = [default_task]
 
 
 @router.get(
@@ -16,50 +19,55 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
     description="Endpoint to get all tasks",
 )
 async def get_tasks():
-    return tasks_fix
+    return default_tasks_list
 
 
 @router.post(
     "/",
     response_model=Task,
 )
-async def create_task(task_data: Task):
-    print(task_data)
-    tasks_fix.append(task_data)
-    return task_data
+async def create_task(task_data: TaskCreate):
+    task = Task(
+        title=task_data.title,
+        pomodoro_count=task_data.pomodoro_count,
+        category_id=task_data.category_id,
+        id=len(default_tasks_list),
+    )
+    default_tasks_list.append(task)
+    return task
 
 
 @router.post(
-    "/{task_id}",
-    # response_model=Task,
+    "/edit/title",
+    response_model=Task,
 )
-async def edit_task_name(task_id: int):
-    for task in tasks_fix:
-        if task["id"] == task_id:
-            task["title"] = "New Title"
-            return {"data": task_id}
+async def edit_task_title(task_info: TaskUpdateTitle):
+    for task in default_tasks_list:
+        if task.id == task_info.id:
+            task.title = task_info.title
+            return task
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Task with id: {task_id} not found",
+        detail=f"Task with id: {task_info.id} not found",
     )
 
 
 @router.delete(
-    "/{task_id}",
+    "/delete",
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Task not found"},
     },
     description="Endpoint to get all tasks",
     # response_model=Task,
 )
-async def delete_task(task_id: int):
-    for index, task in enumerate(tasks_fix):
-        if task["id"] == task_id:
-            del tasks_fix[index]
-            return {"message": f"Task with id: {task_id} successfully deleted"}
+async def delete_task(task_info: TaskDelete):
+    for index, task in enumerate(default_tasks_list):
+        if task.id == task_info.id:
+            default_tasks_list.remove(task)
+            return {"message": f"Task with id: {task_info.id} successfully deleted"}
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Task with id: {task_id} not found",
+        detail=f"Task with id: {task_info.id} not found",
     )
