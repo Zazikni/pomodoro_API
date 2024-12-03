@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class TaskBase(BaseModel):
@@ -13,11 +13,12 @@ class TaskCreate(TaskBase):
 
 
 class Task(TaskBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     title: str
     pomodoro_count: int
     category_id: int
-    completed: bool = False
+    completed: bool
 
 
 class TaskEditBase(TaskBase):
