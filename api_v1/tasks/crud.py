@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 from core.models import Task
-from .schemas import TaskCreate
+from .schemas import TaskCreate, TaskUpdatePartial
 
 
 async def get_all_tasks(session: AsyncSession) -> list[Task]:
@@ -42,3 +42,13 @@ async def edit_task_title(session: AsyncSession, task_id: int, title: str) -> bo
         return True
     else:
         return False
+
+
+async def edit_task_partial(
+    session: AsyncSession, new_task_data: TaskUpdatePartial, task: Task
+) -> Task:
+    # new_task_data.model_dump(exclude_unset=True)
+    for attr, value in new_task_data.model_dump(exclude_unset=True).items():
+        setattr(task, attr, value)
+    await session.commit()
+    return task
