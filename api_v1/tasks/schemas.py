@@ -29,12 +29,10 @@ class TaskUpdateTitle(TaskEditBase):
     title: str
 
 
-class TaskUpdatePomodoroCount(TaskEditBase):
-    pomodoro_count: int
-
-
-class TaskUpdatePomodoroCategoryId(TaskEditBase):
-    category_id: int
+class TaskUpdatePartial(TaskEditBase):
+    title: str | None = None
+    pomodoro_count: int | None = None
+    category_id: int | None = None
 
 
 class TaskUpdatePomodoroCompleted(TaskEditBase):
