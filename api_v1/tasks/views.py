@@ -5,7 +5,7 @@ from api_v1.tasks.schemas import Task, TaskCreate, TaskUpdateTitle, TaskDelete
 from . import crud
 from core.database_manager import database_manager
 
-router = APIRouter(prefix="/tasks", tags=["tasks"])
+router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
 
 @router.get(
