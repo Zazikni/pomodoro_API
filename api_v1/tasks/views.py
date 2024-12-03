@@ -18,7 +18,7 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
     description="Endpoint to get all tasks",
 )
 async def get_tasks(
-    session: AsyncSession = Depends(database_manager.session_dependency),
+    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ) -> list[Task]:
     return await crud.get_all_tasks(session=session)
 
@@ -29,7 +29,7 @@ async def get_tasks(
 )
 async def create_task(
     task_data: TaskCreate,
-    session: AsyncSession = Depends(database_manager.session_dependency),
+    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     return await crud.create_task(session=session, task=task_data)
 
@@ -40,7 +40,7 @@ async def create_task(
 )
 async def edit_task_title(
     task_info: TaskUpdateTitle,
-    session: AsyncSession = Depends(database_manager.session_dependency),
+    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     success = await crud.edit_task_title(
         session=session, task_id=task_info.id, title=task_info.title
@@ -63,7 +63,7 @@ async def edit_task_title(
 )
 async def delete_task(
     task_info: TaskDelete,
-    session: AsyncSession = Depends(database_manager.session_dependency),
+    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     success = await crud.delete_task(session=session, task_id=task_info.id)
     if success:
