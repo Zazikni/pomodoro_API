@@ -34,7 +34,7 @@ async def create_task(
     return await crud.create_task(session=session, task=task_data)
 
 
-@router.post(
+@router.patch(
     "/edit/title",
     response_model=Task,
 )
