@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from tasks.views import router as task_router
+from api_v1 import routers
 from core.models import Base
 from core.database_manager import database_manager
 
@@ -19,4 +19,6 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     lifespan=lifespan,
 )
-app.include_router(router=task_router)
+# Добавление эндпоинтов в приложение
+for router in routers:
+    app.include_router(router=router)

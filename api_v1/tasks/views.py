@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, status, HTTPException
-from tasks.schemas import Task, tasks_fix
+from api_v1.tasks.schemas import Task, tasks_fix
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
