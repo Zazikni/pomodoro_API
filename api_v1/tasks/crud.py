@@ -32,3 +32,13 @@ async def delete_task(session: AsyncSession, task_id: int) -> bool:
         return True
     else:
         return False
+
+
+async def edit_task_title(session: AsyncSession, task_id: int, title: str) -> bool:
+    task = await get_one_task(session=session, task_id=task_id)
+    if task:
+        task.title = title
+        await session.commit()
+        return True
+    else:
+        return False
