@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from api_v1.tasks.schemas import (
     Task,
     TaskCreate,
-    TaskDelete,
     TaskUpdatePartial,
 )
 from .dependencies import get_task_by_id
