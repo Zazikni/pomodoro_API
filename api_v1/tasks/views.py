@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from api_v1.tasks.schemas import (
     Task,
     TaskCreate,
-    TaskUpdateTitle,
     TaskDelete,
     TaskUpdatePartial,
 )
@@ -51,26 +50,6 @@ async def edit_task_partial(
         session=session, new_task_data=task_info, task=task
     )
     return new_task
-
-
-@router.patch(
-    "/edit/title",
-    response_model=Task,
-)
-async def edit_task_title(
-    task_info: TaskUpdateTitle,
-    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
-):
-    success = await crud.edit_task_title(
-        session=session, task_id=task_info.id, title=task_info.title
-    )
-    if success:
-        return await crud.get_one_task(session=session, task_id=task_info.id)
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Task with id: {task_info.id} not found",
-    )
 
 
 @router.delete(

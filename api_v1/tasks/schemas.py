@@ -25,10 +25,6 @@ class TaskEditBase(TaskBase):
     id: int
 
 
-class TaskUpdateTitle(TaskEditBase):
-    title: str
-
-
 class TaskUpdatePartial(TaskEditBase):
     title: str | None = None
     pomodoro_count: int | None = None
