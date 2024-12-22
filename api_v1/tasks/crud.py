@@ -1,8 +1,11 @@
+import sqlalchemy.exc
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 from core.models import Task
 from .schemas import TaskCreate, TaskUpdatePartial
+
+from sqlalchemy.exc import SQLAlchemyError
 
 
 async def get_all_tasks(session: AsyncSession) -> list[Task]:
@@ -24,13 +27,12 @@ async def create_task(session: AsyncSession, task: TaskCreate) -> Task:
     return new_task
 
 
-async def delete_task(session: AsyncSession, task_id: int) -> bool:
-    task = await get_one_task(session=session, task_id=task_id)
-    if task:
+async def delete_task(session: AsyncSession, task: Task) -> bool:
+    try:
         await session.delete(task)
         await session.commit()
         return True
-    else:
+    except SQLAlchemyError:
         return False
 
 

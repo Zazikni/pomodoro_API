@@ -81,14 +81,14 @@ async def edit_task_title(
     description="Endpoint to delete a task",
 )
 async def delete_task(
-    task_info: TaskDelete,
+    task: Task = Depends(get_task_by_id),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
-    success = await crud.delete_task(session=session, task_id=task_info.id)
+    success = await crud.delete_task(session=session, task=task)
     if success:
-        return {"message": f"Task with id: {task_info.id} successfully deleted"}
+        return {"message": f"Task with id: {task.id} successfully deleted"}
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Task with id: {task_info.id} not found",
+        detail=f"Got some problems while deleting your task.",
     )
