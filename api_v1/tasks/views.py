@@ -17,9 +17,7 @@ router = APIRouter(prefix="/tasks", tags=["Tasks"])
     "/all",
     response_model=list[Task],
     status_code=status.HTTP_200_OK,
-    responses={
-        status.HTTP_404_NOT_FOUND: {"description": "Tasks not found"},
-    },
+    responses={},
     description="Endpoint to get all tasks",
 )
 async def get_tasks(
