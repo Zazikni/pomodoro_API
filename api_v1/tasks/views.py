@@ -44,7 +44,13 @@ async def create_task(
     return await crud.create_task(session=session, task=task_data)
 
 
-@router.put(path="/", response_model=Task)
+@router.put(
+    path="/",
+    response_model=Task,
+    responses={
+        status.HTTP_404_NOT_FOUND: {"description": "Task not found"},
+    },
+)
 async def edit_task_partial(
     task_info: TaskUpdatePartial,
     task: Task = Depends(get_task_by_id),
