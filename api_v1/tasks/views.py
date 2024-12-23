@@ -47,6 +47,7 @@ async def create_task(
 @router.put(
     path="/",
     response_model=Task,
+    description="Endpoint to edit task",
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Task not found"},
     },
