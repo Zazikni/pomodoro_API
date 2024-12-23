@@ -31,9 +31,7 @@ async def get_tasks(
     response_model=Task,
     status_code=status.HTTP_201_CREATED,
     description="Endpoint to create a new task",
-    responses={
-        status.HTTP_400_BAD_REQUEST: {"description": "Invalid task data"},
-    },
+    responses={},
 )
 async def create_task(
     task_data: TaskCreate,
