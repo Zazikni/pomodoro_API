@@ -27,13 +27,9 @@ async def create_task(session: AsyncSession, task: TaskCreate) -> Task:
     return new_task
 
 
-async def delete_task(session: AsyncSession, task: Task) -> bool:
-    try:
-        await session.delete(task)
-        await session.commit()
-        return True
-    except SQLAlchemyError:
-        return False
+async def delete_task(session: AsyncSession, task: Task) -> None:
+    await session.delete(task)
+    await session.commit()
 
 
 async def edit_task_partial(

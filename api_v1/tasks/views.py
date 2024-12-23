@@ -61,6 +61,7 @@ async def edit_task_partial(
 
 @router.delete(
     "/",
+    status_code=status.HTTP_204_NO_CONTENT,
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Task not found"},
     },
@@ -70,11 +71,4 @@ async def delete_task(
     task: Task = Depends(get_task_by_id),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
-    success = await crud.delete_task(session=session, task=task)
-    if success:
-        return {"message": f"Task with id: {task.id} successfully deleted"}
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Got some problems while deleting your task.",
-    )
+    await crud.delete_task(session=session, task=task)
