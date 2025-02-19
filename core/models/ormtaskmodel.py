@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .base import Base
+from .ormbasemodel import OrmBaseModel
 
 
-class Task(Base):
+class OrmTaskModel(OrmBaseModel):
     title: Mapped[str]
     pomodoro_count: Mapped[int]
     category_id: Mapped[int]

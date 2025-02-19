@@ -1,8 +1,8 @@
 __all__ = (
-    "Base",
-    "Task",
-    "User",
+    "OrmBaseModel",
+    "OrmTaskModel",
+    "OrmUserModel",
 )
-from .base import Base
-from .task import Task
-from .user import User
+from .ormbasemodel import OrmBaseModel
+from .ormtaskmodel import OrmTaskModel
+from .ormusermodel import OrmUserModel

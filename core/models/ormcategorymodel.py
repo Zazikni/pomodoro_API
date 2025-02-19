@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Mapped
 
-from .base import Base
+from .ormbasemodel import OrmBaseModel
 
 
-class Category(Base):
+class OrmCategoryModel(OrmBaseModel):
     __tablename__ = "categories"
     name: Mapped[str]

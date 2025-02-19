@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Mapped
 
-from .base import Base
+from .ormbasemodel import OrmBaseModel
 
 
-class User(Base):
+class OrmUserModel(OrmBaseModel):
 
     name: Mapped[str]
     surname: Mapped[str]

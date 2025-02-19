@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from api_v1 import router
-from core.models import Base
+from core.models import OrmBaseModel
 from core.database_manager import database_manager
 
 
@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     # Действия перед запуском приложения
     # Создание таблиц в базе данных
     async with database_manager.engine.begin() as connection:
-        await connection.run_sync(Base.metadata.create_all)
+        await connection.run_sync(OrmBaseModel.metadata.create_all)
     yield
     # Действия после завершения приложения
 
