@@ -7,13 +7,13 @@ class CategoryBase(BaseModel):
 
 
 class CategoryCreate(CategoryBase):
-    title: str
+    name: str
 
 
 class Category(CategoryBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    title: str
+    name: str
 
 
 class CategoryEdit(CategoryBase):
