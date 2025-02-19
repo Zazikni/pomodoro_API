@@ -6,7 +6,7 @@ from api_v1.tasks.schemas import (
     TaskCreate,
     TaskUpdatePartial,
 )
-from .dependencies import get_task_by_id_from_body
+from .dependencies import get_task_by_id_from_body, get_task_by_id_from_path
 from . import crud
 from core.database_manager import database_manager
 
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
 
 @router.get(
-    "/all",
+    "/",
     response_model=list[Task],
     status_code=status.HTTP_200_OK,
     responses={},
@@ -41,7 +41,7 @@ async def create_task(
 
 
 @router.put(
-    path="/",
+    path="/{task_id}",
     response_model=Task,
     description="Endpoint to edit task",
     responses={
@@ -50,7 +50,7 @@ async def create_task(
 )
 async def edit_task_partial(
     task_info: TaskUpdatePartial,
-    task: Task = Depends(get_task_by_id_from_body),
+    task: Task = Depends(get_task_by_id_from_path),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     new_task = await crud.edit_task_partial(
@@ -60,7 +60,7 @@ async def edit_task_partial(
 
 
 @router.delete(
-    "/",
+    "/{task_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Task not found"},
@@ -68,7 +68,7 @@ async def edit_task_partial(
     description="Endpoint to delete a task",
 )
 async def delete_task(
-    task: Task = Depends(get_task_by_id_from_body),
+    task: Task = Depends(get_task_by_id_from_path),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     await crud.delete_task(session=session, task=task)

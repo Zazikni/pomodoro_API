@@ -21,11 +21,11 @@ class Task(TaskBase):
     completed: bool
 
 
-class TaskEditBase(TaskBase):
+class TaskEdit(TaskBase):
     id: int
 
 
-class TaskUpdatePartial(TaskEditBase):
+class TaskUpdatePartial(TaskBase):
     title: str | None = None
     pomodoro_count: int | None = None
     category_id: int | None = None
