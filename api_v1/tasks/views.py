@@ -22,7 +22,7 @@ router = APIRouter(prefix="/tasks", tags=["Tasks"])
 )
 async def get_tasks(
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
-) -> list[Task]:
+):
     return await crud.get_all_tasks(session=session)
 
 
