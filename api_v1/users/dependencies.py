@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api_v1.users.schemas import UserEdit
+from api_v1.users.schemas import UserEdit, UserCreate
 from core.database_manager import database_manager
 from . import crud
 
@@ -17,4 +17,12 @@ async def get_user_by_id(
             detail=f"User with id: {user_data.id} not found",
         )
 
+    return user
+
+
+async def create_user_by_request(
+    user_data: UserCreate,
+    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
+):
+    user = await crud.create_user(session=session, user=user_data)
     return user
