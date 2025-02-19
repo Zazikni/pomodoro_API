@@ -72,3 +72,4 @@ async def delete_task(
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     await crud.delete_task(session=session, task=task)
+    return

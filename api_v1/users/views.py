@@ -39,7 +39,7 @@ async def create_user(
 
 @router.delete(
     "/",
-    status_code=status.HTTP_200_OK,
+    status_code=status.HTTP_204_NO_CONTENT,
     responses={status.HTTP_404_NOT_FOUND: {"description": "User not found"}},
     description="Endpoint to delete user",
 )
@@ -48,4 +48,4 @@ async def delete_user(
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
     await crud.delete_user(session=session, user=user)
-    return {"status": "User deleted"}
+    return
