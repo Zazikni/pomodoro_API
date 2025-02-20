@@ -12,8 +12,8 @@ from .settings import settings
 class DatabaseManager:
     def __init__(self):
         self.engine = create_async_engine(
-            url=settings.DATABASE_URL,
-            echo=settings.SQLALCHEMY_ECHO,
+            url=settings.database.DATABASE_URL,
+            echo=settings.database.SQLALCHEMY_ECHO,
         )
         self.session_factory = async_sessionmaker(
             bind=self.engine,
