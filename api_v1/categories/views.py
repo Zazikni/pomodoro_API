@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Depends, Path
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api_v1.categories.schemas import Category, CategoryEdit, CategoryCreate
-from .dependencies import get_category_by_id_from_path, get_category_by_id_from_body
+from .dependencies import get_category_by_id_from_path
 from core.database_manager import database_manager
 from api_v1.categories import crud
 

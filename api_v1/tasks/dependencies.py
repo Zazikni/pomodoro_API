@@ -6,13 +6,6 @@ from core.database_manager import database_manager
 from . import crud
 
 
-async def get_task_by_id_from_body(
-    task_info: TaskEdit,
-    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
-):
-    return await get_task_by_id(session=session, task_id=task_info.id)
-
-
 async def get_task_by_id_from_path(
     object_id: int = Path(..., gt=0),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),

@@ -6,7 +6,7 @@ from api_v1.tasks.schemas import (
     TaskCreate,
     TaskUpdatePartial,
 )
-from .dependencies import get_task_by_id_from_body, get_task_by_id_from_path
+from .dependencies import get_task_by_id_from_path
 from . import crud
 from core.database_manager import database_manager
 

@@ -6,13 +6,6 @@ from core.database_manager import database_manager
 from . import crud
 
 
-async def get_user_by_id_from_body(
-    user_data: UserEdit,
-    session: AsyncSession = Depends(database_manager.scoped_session_dependency),
-):
-    return await get_user_by_id(session=session, user_id=user_data.id)
-
-
 async def get_user_by_id_from_path(
     object_id: int = Path(..., gt=0),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
