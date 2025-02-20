@@ -35,7 +35,7 @@ async def create_category(
 
 
 @router.get(
-    "/{category_id}",
+    "/{object_id}",
     response_model=Category,
     status_code=status.HTTP_200_OK,
     responses={status.HTTP_404_NOT_FOUND: {"description": "Category not found"}},
@@ -48,7 +48,7 @@ async def get_category(
 
 
 @router.delete(
-    "/{category_id}",
+    "/{object_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Category not found"},

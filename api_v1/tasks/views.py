@@ -41,7 +41,7 @@ async def create_task(
 
 
 @router.put(
-    path="/{task_id}",
+    path="/{object_id}",
     response_model=Task,
     description="Endpoint to edit task",
     responses={
@@ -60,7 +60,7 @@ async def edit_task_partial(
 
 
 @router.delete(
-    "/{task_id}",
+    "/{object_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     responses={
         status.HTTP_404_NOT_FOUND: {"description": "Task not found"},

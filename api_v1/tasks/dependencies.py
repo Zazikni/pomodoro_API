@@ -14,10 +14,10 @@ async def get_task_by_id_from_body(
 
 
 async def get_task_by_id_from_path(
-    task_id: int = Path(..., gt=0),
+    object_id: int = Path(..., gt=0),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
-    return await get_task_by_id(session=session, task_id=task_id)
+    return await get_task_by_id(session=session, task_id=object_id)
 
 
 async def get_task_by_id(

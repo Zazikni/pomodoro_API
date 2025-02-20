@@ -15,11 +15,11 @@ async def get_category_by_id_from_body(
 
 
 async def get_category_by_id_from_path(
-    category_id: int = Path(..., gt=0),
+    object_id: int = Path(..., gt=0),
     session: AsyncSession = Depends(database_manager.scoped_session_dependency),
 ):
 
-    return await get_category_by_id(session=session, category_id=category_id)
+    return await get_category_by_id(session=session, category_id=object_id)
 
 
 async def get_category_by_id(
