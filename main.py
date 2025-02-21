@@ -15,6 +15,7 @@ async def lifespan(app: FastAPI):
         await connection.run_sync(OrmBaseModel.metadata.create_all)
     yield
     # Действия после завершения приложения
+    database_manager.dispose()
 
 
 app = FastAPI(
@@ -22,3 +23,8 @@ app = FastAPI(
 )
 # Добавление эндпоинтов в приложение
 app.include_router(router=router)
+
+if __name__ == "__main":
+    import uvicorn
+
+    uvicorn.run("main:app", host=settings.run.HOST, port=settings.run.PORT, reload=True)
