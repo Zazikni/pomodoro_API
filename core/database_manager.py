@@ -15,14 +15,14 @@ class DatabaseManager:
         self,
         url: str,
         echo: bool,
-        # max_overflow: int,
-        # pool_size: int,
+        max_overflow: int,
+        pool_size: int,
     ):
         self.engine: AsyncEngine = create_async_engine(
             url=url,
             echo=echo,
-            # max_overflow=max_overflow,
-            # pool_size=pool_size,
+            max_overflow=max_overflow,
+            pool_size=pool_size,
         )
         self.session_factory = async_sessionmaker(
             bind=self.engine,
@@ -53,8 +53,8 @@ class DatabaseManager:
 
 
 database_manager = DatabaseManager(
-    url=settings.database.URL,
+    url=str(settings.database.URL),
     echo=settings.database.ECHO,
-    # max_overflow=settings.database.MAX_OVERFLOW,
-    # pool_size=settings.database.POOL_SIZE,
+    max_overflow=settings.database.MAX_OVERFLOW,
+    pool_size=settings.database.POOL_SIZE,
 )

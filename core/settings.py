@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import BaseModel
+from pydantic import BaseModel, PostgresDsn
 
 
 class SettingsApplicationRun(BaseSettings):
@@ -8,7 +8,7 @@ class SettingsApplicationRun(BaseSettings):
 
 
 class SettingsDatabase(BaseModel):
-    URL: str
+    URL: PostgresDsn
     ECHO: bool = True
     MAX_OVERFLOW: int = 10
     POOL_SIZE: int = 10

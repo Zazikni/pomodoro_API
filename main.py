@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
         await connection.run_sync(OrmBaseModel.metadata.create_all)
     yield
     # Действия после завершения приложения
-    database_manager.dispose()
+    await database_manager.dispose()
 
 
 app = FastAPI(
