@@ -53,8 +53,8 @@ class DatabaseManager:
 
 
 database_manager = DatabaseManager(
-    url=settings.database.DATABASE_URL,
-    echo=settings.database.SQLALCHEMY_ECHO,
+    url=settings.database.URL,
+    echo=settings.database.ECHO,
     # max_overflow=settings.database.MAX_OVERFLOW,
     # pool_size=settings.database.POOL_SIZE,
 )
