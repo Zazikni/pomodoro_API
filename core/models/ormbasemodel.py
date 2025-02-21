@@ -1,8 +1,11 @@
+from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
+from core.config import settings
 
 
 class OrmBaseModel(DeclarativeBase):
     __abstract__ = True  # Не будет создана таблица в БД
+    metadata = MetaData(naming_convention=settings.database.NAMING_CONVENTIONS)
 
     @declared_attr.directive
     def __tablename__(cls) -> str:
