@@ -11,8 +11,8 @@ from core.config import settings
 async def lifespan(app: FastAPI):
     # Действия перед запуском приложения
     # Создание таблиц в базе данных
-    async with database_manager.engine.begin() as connection:
-        await connection.run_sync(OrmBaseModel.metadata.create_all)
+    # async with database_manager.engine.begin() as connection:
+    #   await connection.run_sync(OrmBaseModel.metadata.create_all)
     yield
     # Действия после завершения приложения
     await database_manager.dispose()
