@@ -48,6 +48,8 @@ class DatabaseManager:
         yield session
         await session.remove()
 
+    async def dispose(self):
+        await self.engine.dispose()
 
 
 database_manager = DatabaseManager(
