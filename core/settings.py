@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import BaseModel
 
 
@@ -8,15 +8,24 @@ class SettingsApplicationRun(BaseSettings):
 
 
 class SettingsDatabase(BaseModel):
-    DATABASE_URL: str = "sqlite+aiosqlite:///./pomodoro_database.sqlite3"
-    SQLALCHEMY_ECHO: bool = True
+    URL: str
+    ECHO: bool = True
     MAX_OVERFLOW: int = 10
     POOL_SIZE: int = 10
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=(
+            ".env.template",
+            ".env",
+        ),
+        case_sensitive=False,
+        env_nested_delimiter="__",
+        env_prefix="POMODORO__",
+    )
     run: SettingsApplicationRun = SettingsApplicationRun()
-    database: SettingsDatabase = SettingsDatabase()
+    database: SettingsDatabase
 
 
 settings = Settings()
