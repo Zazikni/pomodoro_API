@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from asyncio import current_task
 
-from .settings import settings
+from .config import settings
 
 
 class DatabaseManager:

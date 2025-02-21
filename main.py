@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from api_v1 import router
 from core.models import OrmBaseModel
 from core.database_manager import database_manager
-from core.settings import settings
+from core.config import settings
 
 
 @asynccontextmanager
