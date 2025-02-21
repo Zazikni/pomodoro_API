@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     async_scoped_session,
     AsyncSession,
+    AsyncEngine,
 )
 from asyncio import current_task
 
@@ -10,10 +11,18 @@ from .settings import settings
 
 
 class DatabaseManager:
-    def __init__(self):
-        self.engine = create_async_engine(
-            url=settings.database.DATABASE_URL,
-            echo=settings.database.SQLALCHEMY_ECHO,
+    def __init__(
+        self,
+        url: str,
+        echo: bool,
+        # max_overflow: int,
+        # pool_size: int,
+    ):
+        self.engine: AsyncEngine = create_async_engine(
+            url=url,
+            echo=echo,
+            # max_overflow=max_overflow,
+            # pool_size=pool_size,
         )
         self.session_factory = async_sessionmaker(
             bind=self.engine,
@@ -40,4 +49,10 @@ class DatabaseManager:
         await session.remove()
 
 
-database_manager = DatabaseManager()
+
+database_manager = DatabaseManager(
+    url=settings.database.DATABASE_URL,
+    echo=settings.database.SQLALCHEMY_ECHO,
+    # max_overflow=settings.database.MAX_OVERFLOW,
+    # pool_size=settings.database.POOL_SIZE,
+)
